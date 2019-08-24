@@ -57,4 +57,4 @@ client.on("reachLimit", (limit)=> {
   });
 });
  
-client.login('NjE0ODE1MDk5NzU1OTU0MTg3.XWE-kg.deRJyp0bNJ3RlZySVeNs4t1N7h0');
+client.login(process.env.BOT_TOKEN);
