@@ -1,14 +1,13 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
- 
+const discord = new require("discord.js");
+const client = new discord.Client();
 var config = {
   events: [
-    {type: "CHANNEL_CREATE", logType: "CHANNEL_CREATE", limit: 2 , delay: 5000},
-    {type: "CHANNEL_DELETE", logType: "CHANNEL_DELETE", limit: 2, delay: 5000},
-    {type: "GUILD_MEMBER_REMOVE", logType: "MEMBER_KICK", limit: 2, delay: 5000},
+    {type: "CHANNEL_CREATE", logType: "CHANNEL_CREATE", limit: 20 , delay: 5000},
+    {type: "CHANNEL_DELETE", logType: "CHANNEL_DELETE", limit: 4, delay: 5000},
+    {type: "GUILD_MEMBER_REMOVE", logType: "MEMBER_KICK", limit: 5, delay: 5000},
     {type: "GUILD_BAN_ADD", logType: "MEMBER_BAN_ADD", limit: 2, delay: 5000},
-    {type: "GUILD_ROLE_CREATE", logType: "ROLE_CREATE", limit: 2, delay: 5000},
-    {type: "GUILD_ROLE_DELETE", logType: "ROLE_DELETE", limit: 2, delay: 5000},
+    {type: "GUILD_ROLE_CREATE", logType: "ROLE_CREATE", limit: 5, delay: 5000},
+    {type: "GUILD_ROLE_DELETE", logType: "ROLE_DELETE", limit: 4, delay: 5000},
   ]
 }
 client.on("error", (e) => console.error(e));
@@ -48,13 +47,13 @@ client.on("raw", (packet)=> {
     }).catch(console.error)
 });
 client.on("reachLimit", (limit)=> {
-  let log = limit.guild.channels.find( channel => channel.name === "wavo-log");
-  log.send(limit.user.username+"\** Tried to do something :warning:  ! ** ");
-  limit.guild.owner.send(limit.user.username+"\** Tried to do something :warning: !  ! ** ")
+  let log = limit.guild.channels.find( channel => channel.name === "security-log");
+  log.send(limit.user.username+"\** سيرفر بيتهكر ! ** ");
+  limit.guild.owner.send(limit.user.username+"\** سيرفرك بيتهكر ! ** ")
   limit.member.roles.map(role => {
     limit.member.removeRole(role.id)
     .catch(log.send)
   });
 });
- 
+
 client.login(process.env.BOT_TOKEN);
